@@ -53,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
                 if(playerNumber > 30 | playerNumber < 1){
                     feedbackText.setText("Please Enter A Value Between 1 And 30");
                 }
+                else if(playerNumber < randomNum){
+                    feedbackText.setText("Higher :O");
+                }
+                else if(playerNumber > randomNum){
+                    feedbackText.setText("Lower :O");
+                }
+                else if(playerNumber == randomNum){
+                    feedbackText.setText("You Got It!!! :D");
+                }
             }
         });
     }
