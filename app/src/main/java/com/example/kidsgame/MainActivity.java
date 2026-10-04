@@ -30,13 +30,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Random r = new Random();
-        int randomNum = r.nextInt(30) + 1;
+        final int[] randomNum = {r.nextInt(30) + 1};
+
+        final int[] noOfGuesses = {0};
 
         Button button = (Button) findViewById(R.id.guess);
+        Button replayButton = (Button) findViewById(R.id.playAgain);
+
+        EditText numberField = (EditText) findViewById(R.id.numberInput);
+        TextView feedbackText = (TextView) findViewById(R.id.feedback);
+        TextView guessNoText = (TextView) findViewById(R.id.noGuesses);
+
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                EditText numberField = (EditText) findViewById(R.id.numberInput);
-                TextView feedbackText = (TextView) findViewById(R.id.feedback);
+                noOfGuesses[0]++;
 
                 feedbackText.setText("");
 
@@ -53,15 +60,31 @@ public class MainActivity extends AppCompatActivity {
                 if(playerNumber > 30 | playerNumber < 1){
                     feedbackText.setText("Please Enter A Value Between 1 And 30");
                 }
-                else if(playerNumber < randomNum){
+                else if(playerNumber < randomNum[0]){
                     feedbackText.setText("Higher :O");
                 }
-                else if(playerNumber > randomNum){
+                else if(playerNumber > randomNum[0]){
                     feedbackText.setText("Lower :O");
                 }
-                else if(playerNumber == randomNum){
+                else if(playerNumber == randomNum[0]){
                     feedbackText.setText("You Got It!!! :D");
+                    guessNoText.setText("You Took " + noOfGuesses[0] + " Guesses");
+                    replayButton.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        replayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                randomNum[0] = r.nextInt(30) + 1;
+
+                noOfGuesses[0] = 0;
+
+                numberField.setText("");
+                feedbackText.setText("");
+                guessNoText.setText("");
+                replayButton.setVisibility(View.INVISIBLE);
             }
         });
     }
